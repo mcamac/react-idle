@@ -19,29 +19,29 @@ export default class Idle extends Component {
   timeout = null
 
   componentDidMount() {
-    this.attachEvents()
+    this.attachEvents(this.props.events)
     this.setTimeout()
   }
 
   componentWillUnmount() {
-    this.removeEvents()
+    this.removeEvents(this.props.events)
   }
 
   componentDidUpdate(prevProps) {
     if (eventsChanged(prevProps.events, this.props.events)) {
-      this.removeEvents()
-      this.attachEvents()
+      this.removeEvents(prevProps.events)
+      this.attachEvents(this.props.events)
     }
   }
 
-  attachEvents() {
-    this.props.events.forEach(event => {
+  attachEvents(events) {
+    events.forEach(event => {
       window.addEventListener(event, this.handleEvent, true)
     })
   }
 
-  removeEvents() {
-    this.props.events.forEach(event => {
+  removeEvents(events) {
+    events.forEach(event => {
       window.removeEventListener(event, this.handleEvent)
     })
   }
